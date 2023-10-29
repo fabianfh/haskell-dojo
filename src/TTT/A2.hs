@@ -68,8 +68,16 @@ stringToMove _ = _INVALID_MOVE_
 
 -- Q#10
 
-replaceSquareInRow = undefined
+replaceSquareInRow:: Row -> Player -> Int -> Row
+replaceSquareInRow row player  ncol = a ++ player:b
+                              where (a,_:b) = splitAt ncol row  
 
+rsX:: Int -> Row -> Row
+rsX ncol row = replaceSquareInRow row X ncol
+
+
+rsO:: Int -> Row -> Row
+rsO ncol row = replaceSquareInRow row O ncol
 
 
 
