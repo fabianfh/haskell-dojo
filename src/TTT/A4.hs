@@ -12,7 +12,7 @@ _HEADER_ = "_" ++ (concat $ map (\s -> "|_" ++ show(s) ++ "_") _RANGE_ ) ++ "|_"
 -- Q#02
 
 showSquares:: [Player] -> [String]
-showSquares = map show
+showSquares = map showSquare
 
 -- Q#03
 dropFirstCol:: Board -> Board
@@ -68,11 +68,15 @@ getGameState board = case hasWon X board of
                           isInProg board = foldr (\a -> (\b -> b && (elem Empty a))) True board
 
 
-prependRowIndices = undefined
+prependRowIndices::[String] -> [String]
+-- prependRowIndices xs = [(a: ". ") ++ show b | (a,b) <- zip ['A' ..] xs]
+prependRowIndices xs = zipWith (\a -> \b -> (a: ". ") ++  b )['A' ..] xs     
+
 
 -- Q#11
 
-formatBoard = undefined
+formatBoard:: Board -> String
+formatBoard board = unlines $ (' ' :' ' :' ' : _HEADER_ ): (prependRowIndices. formatRows $ board) 
 
 
 

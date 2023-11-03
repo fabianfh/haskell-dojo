@@ -9,13 +9,15 @@ import TTT.A4
 
 -- Q#01
 
-printBoard = undefined
+printBoard:: Board -> IO ()
+printBoard board = putStrLn.formatBoard $ board
 
 -- Q#02
 _LOGO_PATH_ :: FilePath
 _LOGO_PATH_ = "./assets/ttt-logo.txt"
 
-printLogo = undefined
+printLogo :: IO ()
+printLogo = fmap putStr (readFile _LOGO_PATH_)   
 
 -- Q#03
 _RANDOM_BOOL_ :: IO Bool
