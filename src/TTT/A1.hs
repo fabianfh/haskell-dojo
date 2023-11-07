@@ -46,6 +46,7 @@ type Move   = (Int, Int)
 
 -- Q#09 = 
 
+getFirstPlayer:: Bool -> Player 
 getFirstPlayer b = if b then X else O
 
 getFirstPlayer_ b  
@@ -57,8 +58,8 @@ showGameState:: GameState -> String
 showGameState state = case state of 
     XWin -> "X Wins"
     XLoose -> "O Wins" 
-
-
+    Draw -> "It is a draw"
+    InProg -> "Game still in progress"
 
 
 -- Q#11

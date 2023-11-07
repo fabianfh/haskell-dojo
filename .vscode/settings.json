@@ -1,5 +1,5 @@
 {
-  "workbench.colorTheme": "Dracula",
+  "workbench.colorTheme": "Default Dark Modern",
   "workbench.iconTheme": "vscode-icons",
   "haskell.plugin.ghcide-type-lenses.globalOn": false,
   "haskell.plugin.importLens.codeLensOn": false,

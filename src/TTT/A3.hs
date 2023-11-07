@@ -76,11 +76,12 @@ isWinningLine_ player line = all (player ==) line
 
 -- Q#10
 isValidMove:: Board -> Move -> Bool
-isValidMove rs (x,y) = case isMoveInBounds (x,y) of
-                            True  -> go rs y
-                            False -> False
-                            where go :: Board -> Int -> Bool
-                                  go (r:rs) y = isColEmpty r y || go rs y
-                                  go [] _ = False 
-
+isValidMove rs (x,y) = if isMoveInBounds (x,y) 
+                            then moveIsTaken (zip [0 ..] rs) (x,y)
+                            else False
+                            where moveIsTaken :: [(Int,Row)] -> Move -> Bool   
+                                  moveIsTaken (p:ps) (x,y) = if (fst p) == x 
+                                    then isColEmpty (snd p) y 
+                                    else moveIsTaken ps (x,y)
+                                  moveIsTaken [] _ = False
  

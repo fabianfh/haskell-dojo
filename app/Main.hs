@@ -30,7 +30,7 @@ parseChoice apps c = do
 
 main :: IO ()
 main = do
-  logo <- readFile "./assets/dojo-logo.txt"
+  logo  <- return "*** logo ***" -- <- readFile "./assets/dojo-logo.txt"
   putStrLn logo
   menu
   where
@@ -39,10 +39,13 @@ main = do
       do
         hSetBuffering stdin NoBuffering
         hSetBuffering stdout NoBuffering
-        putStrLn "λ SELECT APPLICATION:\n"
+--        putStrLn "λ SELECT APPLICATION:\n"
+        putStrLn "SELECT APPLICATION:\n"
+
         traverse_ printApp $ Map.toList apps
         putStrLn ""
-        putStr "λ "
+        -- putStr "λ "
+        putStr "lambda"
         c <- getChar
         putStrLn ""
         let notFound = putStrLn "Invalid selection: try again.\n" >> menu

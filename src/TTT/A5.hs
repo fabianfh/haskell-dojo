@@ -17,26 +17,45 @@ _LOGO_PATH_ :: FilePath
 _LOGO_PATH_ = "./assets/ttt-logo.txt"
 
 printLogo :: IO ()
-printLogo = fmap putStr (readFile _LOGO_PATH_)   
+-- printLogo = readFile _LOGO_PATH_ >>= putStrLn
+printLogo = return "********* Here comes the logo **********" >>= putStrLn
 
 -- Q#03
-_RANDOM_BOOL_ :: IO Bool
+--_RANDOM_BOOL_ :: IO Bool
 _RANDOM_BOOL_ = uniformM globalStdGen
 
-firstPlayer = undefined
-
+firstPlayer:: IO Player
+-- firstPlayer = _RANDOM_BOOL_ >>= \b -> return (getFirstPlayer b)
+firstPlayer = do 
+                r <- _RANDOM_BOOL_
+                return (getFirstPlayer r)
 -- Q#04
 
-getMove = undefined
-
+getMove:: Board -> IO Move
+getMove board =  getLine >>= \s ->  let move = (stringToMove s) 
+                                    in
+                                        if isValidMove board move 
+                                            then return move 
+                                            else putStrLn "Invalid move! Try again" >> getMove board 
+                                    
+                                
+    
+    
+    
 -- Q#05
-
-play = undefined
+play:: Board -> Player -> IO ()
+play board player =  printLogo 
+                     >>   printBoard board 
+                     >>   promptPlayer player
+                     >>   getMove board
+                     >>=  \move -> case playMove player board move of
+                                   (InProg,nb) -> play nb (switchPlayer player) 
+                                   (otherState,nb) -> putStrLn (showGameState otherState)
 
 -- Q#06
 
 runTTT :: IO ()
-runTTT = putStrLn "Not implemented... yet!"
+runTTT = firstPlayer >>= (play _EMPTY_BOARD_)
 
 -- Q#07
 
@@ -53,3 +72,5 @@ getMoveDo = undefined
 -- Q#10
 
 playDo = undefined
+
+

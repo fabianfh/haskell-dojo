@@ -61,11 +61,16 @@ getGameState board = case hasWon X board of
                     True -> XWin
                     False-> case hasWon O board of
                             True  -> XLoose
-                            False -> case isInProg board of
+                            False -> case hasEmpty board of
                                  True  -> InProg 
                                  False -> Draw
-                    where isInProg:: Board -> Bool
-                          isInProg board = foldr (\a -> (\b -> b && (elem Empty a))) True board
+                    where hasEmpty:: Board -> Bool
+                          hasEmpty board = foldr (\a -> (\b -> b || (elem Empty a))) False board
+
+playMove :: Player -> Board -> Move -> (GameState, Board)
+playMove player board move = (getGameState nb, nb)
+                              where nb = putSquare player board move
+
 
 
 prependRowIndices::[String] -> [String]
